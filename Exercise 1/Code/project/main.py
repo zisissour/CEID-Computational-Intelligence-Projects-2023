@@ -10,16 +10,19 @@ data_raw  = pd.read_csv('./dataset.csv', delimiter=';', low_memory=False)
 
 #Data preprocessing
 
-#Turning categorical values into numerical values
+#Turning categorical values into numerical ones
 
-categorical_data = data_raw['user','gender','class'].copy()
+#Itterate over all the columns containing categorical values
 
-for 
+for column in data_raw['user','gender','class']:
+    columnObj = data_raw[column]
 
-layer = keras.layers.StringLookup()
-layer.adapt(data)
+    layer = keras.layers.StringLookup() #Creating string covnersion layer
+    layer.adapt(columnObj.values) #Adapting layer to column data (making the vocabulary)
+    x = layer(columnObj.values) #Getting data through the layer
 
-x = layer(data)
-print(np.array(x))
+    data_raw[column] = np.array(x) #Replacing values int the original dataset
 
-data_raw['class'] = np.array(x)
+
+print('Final: ')
+print(data_raw)
