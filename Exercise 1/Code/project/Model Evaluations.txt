@@ -1,0 +1,3 @@
+Learning Rate= 0.001Momentum= 0.0Loss Function= categorical_crossentropyHidden Units= 5
+Fold=4:
+[120.84447479248047, 0.2619694471359253]

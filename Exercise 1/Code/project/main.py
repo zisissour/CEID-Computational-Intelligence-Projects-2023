@@ -62,20 +62,26 @@ labels = np.array(labels)
 
 ##### Building the model #######
 
+#Get learning rate, momentum, loss function and number of hidden units
+lr = float(input("Enter learning rate:"))
+m = float(input("Enter momentum: "))
+loss_func = input("Enter loss function:")
+hidden = int(input("Enter number of hidden units:"))
+
 #Creating model
 model = Sequential()
 
-#Creating heading and output layers
-hidden_layer = Dense(5, input_shape=(17,), activation='relu')
+#Creating hidden and output layers
+hidden_layer = Dense(hidden, input_shape=(17,), activation='relu')
 output_layer = Dense(5, activation='softmax')
 
 #Creating gradient descent optimizer with learning rate=0.001 and momentum=0
-sgd = SGD(lr=0.001)
+sgd = SGD(learning_rate=lr, momentum=m)
 
 #Adding layers to model and compiling
 model.add(hidden_layer)
 model.add(output_layer)
-model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics='acc')
+model.compile(loss=loss_func, optimizer=sgd, metrics='acc')
 
 ##Making K-folds##
 
@@ -91,15 +97,18 @@ for train_index , test_index in skf.split(features,labels):
     training_labels = tf.one_hot(labels[train_index],5)
     testing_features = features[test_index]
     testing_labels = tf.one_hot(labels[test_index],5)
-    #checkpoint = ModelCheckpoint('./models/model_'+str(fold), 
-                                 #monitor='val_accuracy',
-                                 #save_best_only=True,
-                                 #mode='max')
+    
 
-    model.fit(training_features,training_labels, epochs=5, 
-              validation_data=(testing_features, testing_labels), verbose=1)
+    model.fit(x=training_features, y=training_labels, epochs=5, 
+              validation_data=(testing_features, testing_labels),
+              verbose=2, use_multiprocessing=True)
 
-    #model.load_weights('./models/model_'+str(fold))
+    eval = model.evaluate(testing_features, testing_labels, verbose=2, use_multiprocessing=True)
+
+    f = open('Model Evaluations.txt', 'w')
+    f.write('Learning Rate= ' +str(lr) +'Momentum= ' +str(m) +'Loss Function= ' +loss_func +'Hidden Units= '+str(hidden)+'\n')
+    f.write('Fold='+ str(fold) +':\n'+str(eval))
+    f.close()
 
     fold +=1
 
