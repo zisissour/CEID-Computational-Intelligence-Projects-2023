@@ -20,8 +20,13 @@ CE -> Προτιμάται σε προβλήματα ταξινόμησης.
 https://www.baeldung.com/cs/ml-loss-accuracy
 https://vitalflux.com/mean-squared-error-vs-cross-entropy-loss-function/
 
+----QA2_2----
+
+πηγές:
+https://www.enthought.com/blog/neural-network-output-layer/
+
 ----QA2_3----
-Σίγουρα θέλουμε Σιγμοειδή. Η υπερβολική εφαπτομένη προτιμάται της λογιστικής ενώ η RELU χρησιμοποιείται πιο συχνά,
+Η υπερβολική εφαπτομένη προτιμάται της λογιστικής ενώ η RELU χρησιμοποιείται πιο συχνά,
 είναι πιο γρήγορη υπολογιστικά και δεν παρουσιάζει κορεσμό.
 
 Πηγές:
