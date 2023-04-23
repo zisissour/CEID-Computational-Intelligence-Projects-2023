@@ -117,10 +117,10 @@ for train_index , test_index in skf.split(features,labels):
     model.add(output_layer)
     model.compile(loss='sparse_categorical_crossentropy', optimizer=sgd, metrics=['mse','acc'])
     
-    callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, min_delta=0.001, restore_best_weights=True)
+    #callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, min_delta=0.001, restore_best_weights=True)
 
     history = model.fit(x=training_features, y=training_labels, epochs=600, batch_size=128,
-              validation_data=(testing_features, testing_labels), callbacks=[callback],
+              validation_data=(testing_features, testing_labels), #callbacks=[callback],
               verbose=2, use_multiprocessing=True)
 
     eval = model.evaluate(x=testing_features, y=testing_labels, verbose=0, use_multiprocessing=True)

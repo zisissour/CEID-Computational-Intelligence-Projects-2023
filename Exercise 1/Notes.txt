@@ -37,3 +37,13 @@ https://www.aitude.com/comparison-of-sigmoid-tanh-and-relu-activation-functions/
 
 ----QA2_4----
 Softmax γιατί είναι κατάλληλη για ταξινόμηση. lecture 6 pg.5
+
+----QA3-----
+https://www.jeremyjordan.me/nn-learning-rate/
+
+----QA4-----
+Πηγές:
+https://towardsdatascience.com/l1-and-l2-regularization-methods-ce25e7fc831c
+https://neptune.ai/blog/fighting-overfitting-with-l1-or-l2-regularization
+https://towardsdatascience.com/regularization-techniques-for-neural-networks-379f5b4c9ac3
+https://towardsdatascience.com/l1-vs-l2-regularization-in-machine-learning-differences-advantages-and-how-to-apply-them-in-72eb12f102b5
