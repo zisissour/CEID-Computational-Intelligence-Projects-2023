@@ -8,15 +8,17 @@ Standarization -> Καλή όταν γνωρίζουμε ότι τα δεδομ�
 
 Πηγές:
 https://towardsai.net/p/data-science/how-when-and-why-should-you-normalize-standardize-rescale-your-data-3f083def38ff
+https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html
 
 ----QA2_1----
 
-MSE -> Απαιτεί να γνωρίζουμε ότι έχουμε πρόβλημα γραμμικης παλινδρόμησης. Προτιμάται σε προβλήματα παλινδρόμησης.
+MSE -> Προτιμάται σε προβλήματα παλινδρόμησης.
 
 CE -> Προτιμάται σε προβλήματα ταξινόμησης.
 
 Πηγές:
 https://www.baeldung.com/cs/ml-loss-accuracy
+https://vitalflux.com/mean-squared-error-vs-cross-entropy-loss-function/
 
 ----QA2_3----
 Σίγουρα θέλουμε Σιγμοειδή. Η υπερβολική εφαπτομένη προτιμάται της λογιστικής ενώ η RELU χρησιμοποιείται πιο συχνά,
