@@ -103,7 +103,7 @@ for train_index , test_index in skf.split(features,labels):
     model = Sequential()
 
     #Creating hidden and output layers
-    hidden_layer = Dense(12, activation='relu', kernel_regularizer=keras.regularizers.l1(0.1))
+    hidden_layer = Dense(12, activation='relu', kernel_regularizer=keras.regularizers.l1(0.9))
     output_layer = Dense(5, activation='softmax')
 
     #Adding layers to model and compiling
