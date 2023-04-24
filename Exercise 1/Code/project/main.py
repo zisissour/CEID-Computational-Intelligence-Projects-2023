@@ -68,16 +68,10 @@ labels = np.array(labels)
 
 
 
-######################### Building the model ########################################
-
-#Get learning rate, momentum and number of hidden units
-lr = float(input("Enter learning rate:"))
-m = float(input("Enter momentum: "))
-hidden = int(input("Enter number of hidden units:"))
-
+######################### Building the model #######################################
 
 #Creating gradient descent optimizer
-sgd = SGD(learning_rate=lr, momentum=m)
+sgd = SGD(learning_rate=0.001, momentum=0.6)
 
 ##Making K-folds##
 
@@ -109,7 +103,7 @@ for train_index , test_index in skf.split(features,labels):
     model = Sequential()
 
     #Creating hidden and output layers
-    hidden_layer = Dense(hidden, activation='relu')
+    hidden_layer = Dense(12, activation='relu', kernel_regularizer=keras.regularizers.l1(0.1))
     output_layer = Dense(5, activation='softmax')
 
     #Adding layers to model and compiling
@@ -117,7 +111,7 @@ for train_index , test_index in skf.split(features,labels):
     model.add(output_layer)
     model.compile(loss='sparse_categorical_crossentropy', optimizer=sgd, metrics=['mse','acc'])
     
-    #callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, min_delta=0.001, restore_best_weights=True)
+    #callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=15, min_delta=0.001, restore_best_weights=True)
 
     history = model.fit(x=training_features, y=training_labels, epochs=600, batch_size=128,
               validation_data=(testing_features, testing_labels), #callbacks=[callback],
