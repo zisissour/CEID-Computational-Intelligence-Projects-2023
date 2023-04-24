@@ -31,10 +31,12 @@ data_processed = data_raw
 
 ##Turning categorical values into numerical ones##
 
+#Transforimng categorical features using ordinal encoder
 oe = OrdinalEncoder()
 oe.fit(data_processed[["user","gender"]])
 data_processed[["user","gender"]] = oe.transform(data_processed[["user","gender"]]) 
 
+#Transforing labels using label encoder
 le = LabelEncoder()
 data_processed.Class = le.fit_transform(data_processed.Class)
 
@@ -63,6 +65,7 @@ scaler = MinMaxScaler()
 #Scaling
 features = scaler.fit_transform(features)
 
+#Turning dataframes into numpy arrays
 features = np.array(features)
 labels = np.array(labels)
 
@@ -74,8 +77,6 @@ labels = np.array(labels)
 sgd = SGD(learning_rate=0.001, momentum=0.6)
 
 ##Making K-folds##
-
-
 skf = StratifiedKFold(n_splits=5, shuffle=True)
 skf.get_n_splits(features, labels)
 
@@ -92,8 +93,10 @@ mean_accuracy = []
 mean_ce =[]
 mean_mse = []
 
+#Itterating over the folds
 for train_index , test_index in skf.split(features,labels):
     
+    #Getting features and labels for this fold
     training_features = features[train_index]
     training_labels = labels[train_index]
     testing_features = features[test_index]
@@ -111,18 +114,24 @@ for train_index , test_index in skf.split(features,labels):
     model.add(output_layer)
     model.compile(loss='sparse_categorical_crossentropy', optimizer=sgd, metrics=['mse','acc'])
     
-    #callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=15, min_delta=0.001, restore_best_weights=True)
+    #Adding early stopping criterion
+    callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=15, min_delta=0.001, restore_best_weights=True)
 
+    #Fitting model with the data
     history = model.fit(x=training_features, y=training_labels, epochs=600, batch_size=128,
-              validation_data=(testing_features, testing_labels), #callbacks=[callback],
+              validation_data=(testing_features, testing_labels), callbacks=[callback],
               verbose=2, use_multiprocessing=True)
 
+    #Getting the evaluation of our model
     eval = model.evaluate(x=testing_features, y=testing_labels, verbose=0, use_multiprocessing=True)
 
+    #Print results
     print('Fold ' + str(fold) + '  loss: \n', eval[0])
     print('Fold ' + str(fold) + '  mse: \n', eval[1])
     print('Fold ' + str(fold) + '  accuracy: \n', eval[2])
     
+
+    ####Saving results######
     mean_accuracy.append(eval[2])
     mean_ce.append(eval[0])
     mean_mse.append(eval[1])
@@ -138,8 +147,7 @@ for train_index , test_index in skf.split(features,labels):
 
     fold +=1
 
-
-##########################Plotting############################
+##########Calculating mean values##############
 
 mean_accuracy = np.mean(mean_accuracy)
 mean_ce = np.mean(mean_ce)
@@ -148,6 +156,8 @@ mean_mse = np.mean(mean_mse)
 print('Mean accuracy: ', mean_accuracy)
 print('Mean CE: ', mean_ce)
 print('Mean mse: ', mean_mse)
+
+##########################Plotting###########################
 
 for i in range(0,5):
     plt.plot(accuracy[i])
