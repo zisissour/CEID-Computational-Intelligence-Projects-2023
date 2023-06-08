@@ -106,7 +106,7 @@ for train_index , test_index in skf.split(features,labels):
     model = Sequential()
 
     #Creating hidden and output layers
-    hidden_layer = Dense(12, activation='relu', kernel_regularizer=keras.regularizers.l1(0.9))
+    hidden_layer = Dense(12, activation='relu')
     output_layer = Dense(5, activation='softmax')
 
     #Adding layers to model and compiling
@@ -116,10 +116,14 @@ for train_index , test_index in skf.split(features,labels):
     
     #Adding early stopping criterion
     callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=15, min_delta=0.001, restore_best_weights=True)
+    
+    filepath = './f_' + str(fold) + 'model'
+    save_callback = keras.callbacks.ModelCheckpoint(filepath=filepath, save_weights_only=False, monitor='val_loss', mode='min', save_best_only=True)
+
 
     #Fitting model with the data
     history = model.fit(x=training_features, y=training_labels, epochs=600, batch_size=128,
-              validation_data=(testing_features, testing_labels), callbacks=[callback],
+              validation_data=(testing_features, testing_labels), callbacks=[callback,save_callback],
               verbose=2, use_multiprocessing=True)
 
     #Getting the evaluation of our model
