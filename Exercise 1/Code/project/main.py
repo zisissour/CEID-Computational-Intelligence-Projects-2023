@@ -40,8 +40,6 @@ data_processed[["user","gender"]] = oe.transform(data_processed[["user","gender"
 le = LabelEncoder()
 data_processed.Class = le.fit_transform(data_processed.Class)
 
-
-
 #Split features and labels
 features = data_processed.copy()
 labels = features.pop('Class')
@@ -152,6 +150,8 @@ for train_index , test_index in skf.split(features,labels):
     fold +=1
 
 ##########Calculating mean values##############
+
+print("Best model: "+ str(np.argmax(mean_accuracy, axis=0)+1))
 
 mean_accuracy = np.mean(mean_accuracy)
 mean_ce = np.mean(mean_ce)
