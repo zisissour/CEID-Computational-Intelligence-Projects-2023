@@ -1,0 +1,6 @@
+------Prediction Probabilities------
+sitting: 1.0
+sittingdown: 5.2528657e-18
+standing: 7.377831e-34
+standingup: 8.232387e-19
+walking: 5.302238e-30

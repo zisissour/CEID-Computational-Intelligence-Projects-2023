@@ -1,0 +1,2 @@
+Mean number of generations: 9.15
+Mean max evaluation: 2.0046322797816325
